@@ -3,7 +3,7 @@ import Vision
 import AVFoundation
 import CoreML
 
-class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     private var viewModel: AVCaptureViewModel!
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private var captureSession: AVCaptureSession!
@@ -62,7 +62,6 @@ class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleB
             } catch let error {
                 print(error)
             }
-            Thread.sleep(forTimeInterval: 1.0)
         }
     }
     
@@ -81,7 +80,6 @@ class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleB
         view.layer.addSublayer(previewLayer)
         
         detectLayer.borderWidth = 4.0
-        
         detectLayer.borderColor = UIColor.red.cgColor
         previewLayer.addSublayer(self.detectLayer)
         

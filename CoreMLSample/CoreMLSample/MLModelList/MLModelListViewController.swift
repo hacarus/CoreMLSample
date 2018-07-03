@@ -3,17 +3,11 @@ import CoreML
 import Vision
 
 final class MLModelListViewController: UITableViewController {
-    // You can customize your own ML Model.
-    // You can just add item. Below is esample.
-    // .init(title: "section title", items: ["This item is define in MLModelListViewModel.Section.MLModels"])
+    private let viewModel = MLModelListViewModel()
     
-    private let viewModel = MLModelListViewModel(sections: [
-                                                            .init(title: "Provided by Apple Inc.", items: [.mobileNet]),
-                                                            .init(title: "Provided by my self", items: [.squeezeNet]),
-                                                            ])
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Choose ML Models"
+        title = "ML Model Lists"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
