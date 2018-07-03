@@ -12,6 +12,14 @@
 		64E8DBD720EB553500F5B9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64E8DBD520EB553500F5B9BA /* LaunchScreen.storyboard */; };
 		64E8DBE220EB553600F5B9BA /* CoreMLSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBE120EB553600F5B9BA /* CoreMLSampleTests.swift */; };
 		64E8DBED20EB553600F5B9BA /* CoreMLSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBEC20EB553600F5B9BA /* CoreMLSampleUITests.swift */; };
+		64E8DBFB20EB56CC00F5B9BA /* MLModelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBFA20EB56CC00F5B9BA /* MLModelListViewController.swift */; };
+		64E8DBFD20EB5CE600F5B9BA /* MLModelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBFC20EB5CE600F5B9BA /* MLModelListViewModel.swift */; };
+		64E8DBFF20EB5D1900F5B9BA /* MLModelListViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBFE20EB5D1900F5B9BA /* MLModelListViewBuilder.swift */; };
+		64E8DC0320EB5F5E00F5B9BA /* AVCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0220EB5F5E00F5B9BA /* AVCaptureViewController.swift */; };
+		64E8DC0520EB5F7700F5B9BA /* AVCaptureViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0420EB5F7700F5B9BA /* AVCaptureViewBuilder.swift */; };
+		64E8DC0720EB600B00F5B9BA /* AVCaptureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0620EB600B00F5B9BA /* AVCaptureViewModel.swift */; };
+		64E8DC0A20EB61EE00F5B9BA /* MobileNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0920EB61EE00F5B9BA /* MobileNet.mlmodel */; };
+		64E8DC0C20EB634B00F5B9BA /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0B20EB634B00F5B9BA /* SqueezeNet.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +51,14 @@
 		64E8DBE820EB553600F5B9BA /* CoreMLSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreMLSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64E8DBEC20EB553600F5B9BA /* CoreMLSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMLSampleUITests.swift; sourceTree = "<group>"; };
 		64E8DBEE20EB553600F5B9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64E8DBFA20EB56CC00F5B9BA /* MLModelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModelListViewController.swift; sourceTree = "<group>"; };
+		64E8DBFC20EB5CE600F5B9BA /* MLModelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModelListViewModel.swift; sourceTree = "<group>"; };
+		64E8DBFE20EB5D1900F5B9BA /* MLModelListViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModelListViewBuilder.swift; sourceTree = "<group>"; };
+		64E8DC0220EB5F5E00F5B9BA /* AVCaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureViewController.swift; sourceTree = "<group>"; };
+		64E8DC0420EB5F7700F5B9BA /* AVCaptureViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureViewBuilder.swift; sourceTree = "<group>"; };
+		64E8DC0620EB600B00F5B9BA /* AVCaptureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureViewModel.swift; sourceTree = "<group>"; };
+		64E8DC0920EB61EE00F5B9BA /* MobileNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNet.mlmodel; sourceTree = "<group>"; };
+		64E8DC0B20EB634B00F5B9BA /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +109,9 @@
 		64E8DBCB20EB553300F5B9BA /* CoreMLSample */ = {
 			isa = PBXGroup;
 			children = (
+				64E8DC0820EB61E000F5B9BA /* Models */,
+				64E8DC0020EB5E4700F5B9BA /* MLModelList */,
+				64E8DC0120EB5F4000F5B9BA /* AVCapture */,
 				64E8DBCC20EB553300F5B9BA /* AppDelegate.swift */,
 				64E8DBD320EB553500F5B9BA /* Assets.xcassets */,
 				64E8DBD520EB553500F5B9BA /* LaunchScreen.storyboard */,
@@ -117,6 +136,35 @@
 				64E8DBEE20EB553600F5B9BA /* Info.plist */,
 			);
 			path = CoreMLSampleUITests;
+			sourceTree = "<group>";
+		};
+		64E8DC0020EB5E4700F5B9BA /* MLModelList */ = {
+			isa = PBXGroup;
+			children = (
+				64E8DBFA20EB56CC00F5B9BA /* MLModelListViewController.swift */,
+				64E8DBFE20EB5D1900F5B9BA /* MLModelListViewBuilder.swift */,
+				64E8DBFC20EB5CE600F5B9BA /* MLModelListViewModel.swift */,
+			);
+			path = MLModelList;
+			sourceTree = "<group>";
+		};
+		64E8DC0120EB5F4000F5B9BA /* AVCapture */ = {
+			isa = PBXGroup;
+			children = (
+				64E8DC0220EB5F5E00F5B9BA /* AVCaptureViewController.swift */,
+				64E8DC0620EB600B00F5B9BA /* AVCaptureViewModel.swift */,
+				64E8DC0420EB5F7700F5B9BA /* AVCaptureViewBuilder.swift */,
+			);
+			path = AVCapture;
+			sourceTree = "<group>";
+		};
+		64E8DC0820EB61E000F5B9BA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				64E8DC0B20EB634B00F5B9BA /* SqueezeNet.mlmodel */,
+				64E8DC0920EB61EE00F5B9BA /* MobileNet.mlmodel */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,7 +297,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E8DC0A20EB61EE00F5B9BA /* MobileNet.mlmodel in Sources */,
+				64E8DC0C20EB634B00F5B9BA /* SqueezeNet.mlmodel in Sources */,
+				64E8DC0520EB5F7700F5B9BA /* AVCaptureViewBuilder.swift in Sources */,
+				64E8DC0320EB5F5E00F5B9BA /* AVCaptureViewController.swift in Sources */,
+				64E8DC0720EB600B00F5B9BA /* AVCaptureViewModel.swift in Sources */,
+				64E8DBFD20EB5CE600F5B9BA /* MLModelListViewModel.swift in Sources */,
+				64E8DBFB20EB56CC00F5B9BA /* MLModelListViewController.swift in Sources */,
 				64E8DBCD20EB553300F5B9BA /* AppDelegate.swift in Sources */,
+				64E8DBFF20EB5D1900F5B9BA /* MLModelListViewBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +403,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -401,7 +457,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -417,7 +473,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MC2EZ69P4V;
 				INFOPLIST_FILE = CoreMLSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -436,7 +492,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MC2EZ69P4V;
 				INFOPLIST_FILE = CoreMLSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
