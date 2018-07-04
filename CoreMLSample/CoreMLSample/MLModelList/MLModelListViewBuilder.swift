@@ -2,6 +2,7 @@ import UIKit
 
 struct MLModelListViewBuilder {
     static func build() -> UINavigationController {
-        return .init(rootViewController: MLModelListViewController())
+        let mlModelListViewController: MLModelListViewController = .init()
+        return .init(rootViewController: mlModelListViewController)
     }
 }
