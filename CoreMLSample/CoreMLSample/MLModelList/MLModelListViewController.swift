@@ -30,6 +30,7 @@ final class MLModelListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         var model: MLModel
         switch viewModel.sections[indexPath.section].items[indexPath.row] {
         case .mobileNet:
