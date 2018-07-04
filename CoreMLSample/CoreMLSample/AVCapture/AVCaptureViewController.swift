@@ -69,8 +69,14 @@ final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputS
         self.captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
         
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
-        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
+            fatalError("Could not set av capture device")
+        }
+        
+        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else {
+            fatalError("Could not set av capture device input")
+        }
+        
         captureSession.addInput(input)
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
