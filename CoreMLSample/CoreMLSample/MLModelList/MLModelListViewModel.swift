@@ -1,13 +1,15 @@
 import UIKit
+import CoreML
+import Vision
 
 // You can customize your own ML Model.
-// You can just add item. Below is esample.
-// .init(title: "section title", items: ["This item is define in MLModels"])
+// You can just add item. Below is exsample.
+// .init(title: "section title", items: ["Item is MLModel that define MLModels of enum case"])
 
 struct MLModelListViewModel {
     let sections: [Section] = [
-                                .init(title: "Provided by Apple Inc.", items: [.mobileNet]),
-                                .init(title: "Provided by my self", items: [.squeezeNet]),
+                                .init(title: "Provided by Apple Inc.", items: [.mobileNet]), // Add in array of items provided by apple.
+                                .init(title: "Provided by own", items: [.squeezeNet]), // Add in array of items created by own.
                               ]
     
     struct Section {
@@ -24,6 +26,15 @@ struct MLModelListViewModel {
                     return "Mobile Net"
                 case .squeezeNet:
                     return "Squeeze Net"
+                }
+            }
+            
+            var model: MLModel {
+                switch self {
+                case .mobileNet:
+                    return MobileNet().model
+                case .squeezeNet:
+                    return SqueezeNet().model
                 }
             }
         }
