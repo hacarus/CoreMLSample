@@ -5,10 +5,6 @@ import CoreML
 
 final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     private var viewModel: AVCaptureViewModel!
-    private var previewLayer: AVCaptureVideoPreviewLayer!
-    private var captureSession: AVCaptureSession!
-    private var detectLayer = CALayer()
-    private var textLayer: CATextLayer!
     
     func inject(_ viewModel: AVCaptureViewModel) {
         self.viewModel = viewModel
@@ -17,7 +13,7 @@ final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputS
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Camera"
-        setUpAVCapture()
+        view.layer.addSublayer(previewLayer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,22 +30,19 @@ final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputS
         guard let model = try? VNCoreMLModel(for: viewModel.mlModel) else {
             fatalError("can't load Core ML model")
         }
-        return VNCoreMLRequest(model: model, completionHandler: self.handleModel)
+        return .init(model: model, completionHandler: self.handleModel)
     }()
     
     private func handleModel(request: VNRequest, error: Error?) {
         guard let results = request.results as? [VNClassificationObservation] else { return }
         
         if let classification = results.first {
-            var identifier = ""
-            for text in classification.identifier {
-                identifier.append(text)
-                if text.description == "," {
-                    identifier.append("\n")
-                }
+            let identifier = classification.identifier.reduce(into: String()) { (text, character) in
+                text.append(character.description == "," ? "\n" : character)
             }
+            
             DispatchQueue.main.async {
-                self.textLayer.string = "\(identifier)\n\n\(classification.confidence)"
+                self.textLayer.string = "\(identifier)\n\(classification.confidence)"
             }
         }
     }
@@ -60,36 +53,20 @@ final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputS
             do {
                 try VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:]).perform([self.modelRequest])
             } catch let error {
-                print(error)
+                NSLog(error.localizedDescription)
             }
         }
     }
     
-    private func setUpAVCapture() {
-        self.captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .photo
-        
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
-            fatalError("Could not set av capture device")
-        }
-        
-        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else {
-            fatalError("Could not set av capture device input")
-        }
-        
-        captureSession.addInput(input)
-        
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.frame = view.layer.bounds
-        previewLayer.backgroundColor = UIColor.clear.cgColor
-        previewLayer.videoGravity = .resizeAspectFill
-        view.layer.addSublayer(previewLayer)
-        
-        detectLayer.borderWidth = 4.0
-        detectLayer.borderColor = UIColor.red.cgColor
-        previewLayer.addSublayer(self.detectLayer)
-        
-        textLayer = CATextLayer()
+    private lazy var detectLayer: CALayer = {
+        let layer = CALayer()
+        layer.borderWidth = 4.0
+        layer.borderColor = UIColor.red.cgColor
+        return layer
+    }()
+    
+    private lazy var textLayer: CATextLayer = {
+        let textLayer = CATextLayer()
         textLayer.foregroundColor = UIColor.black.cgColor
         textLayer.fontSize = 14
         textLayer.frame = .init(x: 10, y: view.frame.size.height - 130, width: 200, height: 120)
@@ -98,10 +75,36 @@ final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputS
         textLayer.cornerRadius = 6.0
         textLayer.masksToBounds = true
         textLayer.alignmentMode = kCAAlignmentCenter
-        view.layer.addSublayer(textLayer)
+        return textLayer
+    }()
+    
+    private lazy var previewLayer: AVCaptureVideoPreviewLayer = {
+        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.frame = view.layer.bounds
+        previewLayer.backgroundColor = UIColor.clear.cgColor
+        previewLayer.videoGravity = .resizeAspectFill
         
-        let dataOutput = AVCaptureVideoDataOutput()
-        dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.init(label: "video"))
-        captureSession.addOutput(dataOutput)
-    }
+        previewLayer.addSublayer(detectLayer)
+        previewLayer.addSublayer(textLayer)
+        return previewLayer
+    }()
+    
+    private lazy var captureSession: AVCaptureSession = {
+        let captureSession = AVCaptureSession()
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
+            fatalError("Could not set av capture device")
+        }
+        
+        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else {
+            fatalError("Could not set av capture device input")
+        }
+        
+        let output = AVCaptureVideoDataOutput()
+        output.setSampleBufferDelegate(self, queue: DispatchQueue.init(label: "video"))
+        
+        captureSession.sessionPreset = .photo
+        captureSession.addInput(input)
+        captureSession.addOutput(output)
+        return captureSession
+    }()
 }
