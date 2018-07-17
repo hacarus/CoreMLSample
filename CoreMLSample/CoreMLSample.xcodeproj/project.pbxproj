@@ -15,9 +15,9 @@
 		64E8DBFB20EB56CC00F5B9BA /* MLModelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBFA20EB56CC00F5B9BA /* MLModelListViewController.swift */; };
 		64E8DBFD20EB5CE600F5B9BA /* MLModelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBFC20EB5CE600F5B9BA /* MLModelListViewModel.swift */; };
 		64E8DBFF20EB5D1900F5B9BA /* MLModelListViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DBFE20EB5D1900F5B9BA /* MLModelListViewBuilder.swift */; };
-		64E8DC0320EB5F5E00F5B9BA /* AVCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0220EB5F5E00F5B9BA /* AVCaptureViewController.swift */; };
-		64E8DC0520EB5F7700F5B9BA /* AVCaptureViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0420EB5F7700F5B9BA /* AVCaptureViewBuilder.swift */; };
-		64E8DC0720EB600B00F5B9BA /* AVCaptureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0620EB600B00F5B9BA /* AVCaptureViewModel.swift */; };
+		64E8DC0320EB5F5E00F5B9BA /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0220EB5F5E00F5B9BA /* CaptureViewController.swift */; };
+		64E8DC0520EB5F7700F5B9BA /* CaptureViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0420EB5F7700F5B9BA /* CaptureViewBuilder.swift */; };
+		64E8DC0720EB600B00F5B9BA /* CaptureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0620EB600B00F5B9BA /* CaptureViewModel.swift */; };
 		64E8DC0A20EB61EE00F5B9BA /* MobileNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0920EB61EE00F5B9BA /* MobileNet.mlmodel */; };
 		64E8DC0C20EB634B00F5B9BA /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC0B20EB634B00F5B9BA /* SqueezeNet.mlmodel */; };
 /* End PBXBuildFile section */
@@ -54,9 +54,9 @@
 		64E8DBFA20EB56CC00F5B9BA /* MLModelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModelListViewController.swift; sourceTree = "<group>"; };
 		64E8DBFC20EB5CE600F5B9BA /* MLModelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModelListViewModel.swift; sourceTree = "<group>"; };
 		64E8DBFE20EB5D1900F5B9BA /* MLModelListViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModelListViewBuilder.swift; sourceTree = "<group>"; };
-		64E8DC0220EB5F5E00F5B9BA /* AVCaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureViewController.swift; sourceTree = "<group>"; };
-		64E8DC0420EB5F7700F5B9BA /* AVCaptureViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureViewBuilder.swift; sourceTree = "<group>"; };
-		64E8DC0620EB600B00F5B9BA /* AVCaptureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureViewModel.swift; sourceTree = "<group>"; };
+		64E8DC0220EB5F5E00F5B9BA /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		64E8DC0420EB5F7700F5B9BA /* CaptureViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewBuilder.swift; sourceTree = "<group>"; };
+		64E8DC0620EB600B00F5B9BA /* CaptureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewModel.swift; sourceTree = "<group>"; };
 		64E8DC0920EB61EE00F5B9BA /* MobileNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNet.mlmodel; sourceTree = "<group>"; };
 		64E8DC0B20EB634B00F5B9BA /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,7 +111,7 @@
 			children = (
 				64E8DC0820EB61E000F5B9BA /* Models */,
 				64E8DC0020EB5E4700F5B9BA /* MLModelList */,
-				64E8DC0120EB5F4000F5B9BA /* AVCapture */,
+				64E8DC0120EB5F4000F5B9BA /* Capture */,
 				64E8DBCC20EB553300F5B9BA /* AppDelegate.swift */,
 				64E8DBD320EB553500F5B9BA /* Assets.xcassets */,
 				64E8DBD520EB553500F5B9BA /* LaunchScreen.storyboard */,
@@ -148,14 +148,14 @@
 			path = MLModelList;
 			sourceTree = "<group>";
 		};
-		64E8DC0120EB5F4000F5B9BA /* AVCapture */ = {
+		64E8DC0120EB5F4000F5B9BA /* Capture */ = {
 			isa = PBXGroup;
 			children = (
-				64E8DC0220EB5F5E00F5B9BA /* AVCaptureViewController.swift */,
-				64E8DC0620EB600B00F5B9BA /* AVCaptureViewModel.swift */,
-				64E8DC0420EB5F7700F5B9BA /* AVCaptureViewBuilder.swift */,
+				64E8DC0220EB5F5E00F5B9BA /* CaptureViewController.swift */,
+				64E8DC0620EB600B00F5B9BA /* CaptureViewModel.swift */,
+				64E8DC0420EB5F7700F5B9BA /* CaptureViewBuilder.swift */,
 			);
-			path = AVCapture;
+			path = Capture;
 			sourceTree = "<group>";
 		};
 		64E8DC0820EB61E000F5B9BA /* Models */ = {
@@ -299,9 +299,9 @@
 			files = (
 				64E8DC0A20EB61EE00F5B9BA /* MobileNet.mlmodel in Sources */,
 				64E8DC0C20EB634B00F5B9BA /* SqueezeNet.mlmodel in Sources */,
-				64E8DC0520EB5F7700F5B9BA /* AVCaptureViewBuilder.swift in Sources */,
-				64E8DC0320EB5F5E00F5B9BA /* AVCaptureViewController.swift in Sources */,
-				64E8DC0720EB600B00F5B9BA /* AVCaptureViewModel.swift in Sources */,
+				64E8DC0520EB5F7700F5B9BA /* CaptureViewBuilder.swift in Sources */,
+				64E8DC0320EB5F5E00F5B9BA /* CaptureViewController.swift in Sources */,
+				64E8DC0720EB600B00F5B9BA /* CaptureViewModel.swift in Sources */,
 				64E8DBFD20EB5CE600F5B9BA /* MLModelListViewModel.swift in Sources */,
 				64E8DBFB20EB56CC00F5B9BA /* MLModelListViewController.swift in Sources */,
 				64E8DBCD20EB553300F5B9BA /* AppDelegate.swift in Sources */,

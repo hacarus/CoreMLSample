@@ -32,7 +32,7 @@ final class MLModelListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let model = viewModel.sections[indexPath.section].items[indexPath.row].model
-        let targetView = AVCaptureViewBuilder.build(for: model)
+        let targetView = CaptureViewBuilder.build(for: model)
         navigationController?.pushViewController(targetView, animated: true)
     }
 }

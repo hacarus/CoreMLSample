@@ -1,6 +1,6 @@
 import UIKit
 import CoreML
 
-struct AVCaptureViewModel {
+struct CaptureViewModel {
     let mlModel: MLModel
 }

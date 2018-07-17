@@ -3,10 +3,10 @@ import Vision
 import AVFoundation
 import CoreML
 
-final class AVCaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
-    private var viewModel: AVCaptureViewModel!
+final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+    private var viewModel: CaptureViewModel!
     
-    func inject(_ viewModel: AVCaptureViewModel) {
+    func inject(_ viewModel: CaptureViewModel) {
         self.viewModel = viewModel
     }
 
