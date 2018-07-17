@@ -7,12 +7,14 @@ final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSam
     private var viewModel: CaptureViewModel
     private var captureSession: AVCaptureSession!
     
-    private lazy var modelRequest: VNCoreMLRequest = {
-        guard let model = try? VNCoreMLModel(for: viewModel.mlModel) else {
-            fatalError("can't load Core ML model")
-        }
-        return .init(model: model, completionHandler: self.handleModel)
-    }()
+    init(_ viewModel: CaptureViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var detectLayer: CALayer = {
         let layer = CALayer()
@@ -45,6 +47,13 @@ final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSam
         return previewLayer
     }()
     
+    private lazy var modelRequest: VNCoreMLRequest = {
+        guard let model = try? VNCoreMLModel(for: viewModel.mlModel) else {
+            fatalError("can't load Core ML model")
+        }
+        return .init(model: model, completionHandler: self.handleModel)
+    }()
+    
     private func setUpAVCapture() {
         let captureSession = AVCaptureSession()
         guard let captureDevice = AVCaptureDevice.default(for: .video) else {
@@ -63,15 +72,6 @@ final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSam
         captureSession.addOutput(output)
         self.captureSession = captureSession
         view.layer.addSublayer(previewLayer)
-    }
-    
-    init(_ viewModel: CaptureViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func handleModel(request: VNRequest, error: Error?) {
