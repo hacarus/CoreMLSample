@@ -4,59 +4,15 @@ import AVFoundation
 import CoreML
 
 final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
-    private var viewModel: CaptureViewModel!
+    private var viewModel: CaptureViewModel
+    private var captureSession: AVCaptureSession!
     
-    func inject(_ viewModel: CaptureViewModel) {
-        self.viewModel = viewModel
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Camera"
-        view.layer.addSublayer(previewLayer)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        captureSession.startRunning()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        captureSession.stopRunning()
-    }
-    
-    lazy var modelRequest: VNCoreMLRequest = {
+    private lazy var modelRequest: VNCoreMLRequest = {
         guard let model = try? VNCoreMLModel(for: viewModel.mlModel) else {
             fatalError("can't load Core ML model")
         }
         return .init(model: model, completionHandler: self.handleModel)
     }()
-    
-    private func handleModel(request: VNRequest, error: Error?) {
-        guard let results = request.results as? [VNClassificationObservation] else { return }
-        
-        if let classification = results.first {
-            let identifier = classification.identifier.reduce(into: String()) { (text, character) in
-                text.append(character.description == "," ? "\n" : character)
-            }
-            
-            DispatchQueue.main.async {
-                self.textLayer.string = "\(identifier)\n\(classification.confidence)"
-            }
-        }
-    }
-    
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-        DispatchQueue.global(qos: .userInteractive).async {
-            do {
-                try VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:]).perform([self.modelRequest])
-            } catch let error {
-                NSLog(error.localizedDescription)
-            }
-        }
-    }
     
     private lazy var detectLayer: CALayer = {
         let layer = CALayer()
@@ -89,7 +45,7 @@ final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSam
         return previewLayer
     }()
     
-    private lazy var captureSession: AVCaptureSession = {
+    private func setUpAVCapture() {
         let captureSession = AVCaptureSession()
         guard let captureDevice = AVCaptureDevice.default(for: .video) else {
             fatalError("Could not set av capture device")
@@ -100,11 +56,62 @@ final class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSam
         }
         
         let output = AVCaptureVideoDataOutput()
-        output.setSampleBufferDelegate(self, queue: DispatchQueue.init(label: "video"))
+        output.setSampleBufferDelegate(self, queue: .init(label: "video"))
         
         captureSession.sessionPreset = .photo
         captureSession.addInput(input)
         captureSession.addOutput(output)
-        return captureSession
-    }()
+        self.captureSession = captureSession
+        view.layer.addSublayer(previewLayer)
+    }
+    
+    init(_ viewModel: CaptureViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func handleModel(request: VNRequest, error: Error?) {
+        guard let results = request.results as? [VNClassificationObservation] else { return }
+        
+        if let classification = results.first {
+            let identifier = classification.identifier.reduce(into: String()) { (text, character) in
+                text.append(character.description == "," ? "\n" : character)
+            }
+            
+            DispatchQueue.main.async {
+                self.textLayer.string = "\(identifier)\n\(classification.confidence)"
+            }
+        }
+    }
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        DispatchQueue.global(qos: .userInteractive).async {
+            do {
+                try VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:]).perform([self.modelRequest])
+            } catch let error {
+                NSLog(error.localizedDescription)
+            }
+        }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Camera"
+        setUpAVCapture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        captureSession.startRunning()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        captureSession.stopRunning()
+    }
 }
